@@ -1,0 +1,31 @@
+name: Automated Data Preprocessing
+
+on:
+  push:
+    paths:
+      - 'preprocessing/**'
+  workflow_dispatch:
+
+jobs:
+  run-preprocessing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pandas scikit-learn
+
+      - name: Run script preprocessing
+        run: python preprocessing/automate_Ardra_Chandra_Satriyo.py
+
+      - name: Upload processed data as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: processed-data
+          path: data/
