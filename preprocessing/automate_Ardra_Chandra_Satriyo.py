@@ -9,8 +9,10 @@ def main():
     data = load_wine(as_frame=True)
     df = data.frame
     
-    # Buat direktori data jika belum ada
-    os.makedirs('data', exist_ok=True)
+    # Simpan dataset raw ke wine_raw/
+    os.makedirs('wine_raw', exist_ok=True)
+    df.to_csv('wine_raw/wine_raw.csv', index=False)
+    print("Dataset raw disimpan ke wine_raw/wine_raw.csv")
     
     # Preprocessing ringan
     print("Menangani missing values (jika ada)...")
@@ -30,10 +32,13 @@ def main():
     train_df = pd.concat([X_train, y_train], axis=1)
     test_df = pd.concat([X_test, y_test], axis=1)
     
-    print("Menyimpan hasil ke foler data/...")
-    train_df.to_csv('data/train.csv', index=False)
-    test_df.to_csv('data/test.csv', index=False)
+    # Simpan ke wine_preprocessing/
+    os.makedirs('wine_preprocessing', exist_ok=True)
+    print("Menyimpan hasil preprocessing ke wine_preprocessing/...")
+    train_df.to_csv('wine_preprocessing/train.csv', index=False)
+    test_df.to_csv('wine_preprocessing/test.csv', index=False)
     print("Pre-processing selesai!")
 
 if __name__ == '__main__':
     main()
+
